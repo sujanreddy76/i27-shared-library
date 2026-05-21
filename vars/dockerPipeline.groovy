@@ -212,7 +212,7 @@ def call(Map pipelineParams) {
                 steps {
                     script {
                         timeout(time: 300, unit: 'SECONDS') { //SECONDS, MINUTES, HOURS
-                            input message: "Deploying ${env.APPLICATION_NAME} to Production??", ok: 'yes', submitter: 'sivasre,sujanacademy'
+                            input message: "Deploying ${env.APPLICATION_NAME} to Production??", ok: 'yes', submitter: 'sujanSRE,sivaTechlead'
                         }
                        // dockerDeploy('prod', '8761', '8761').call()  
                         dockerDeploy('prod', "${env.PROD_HOST_PORT}", "${env.CONT_PORT}").call()    
