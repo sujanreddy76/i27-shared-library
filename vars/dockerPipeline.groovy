@@ -222,33 +222,33 @@ def call(Map pipelineParams) {
             }         
 
         }
-        post {
-            // Only run if the pipeline or stage has success status
-            success {
-                script {
-                    // Send email notification with custom message
-                    def subject = "Pipeline ${currentBuild.currentResult}: Job: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}"
-                    def body = "Build Number: ${env.BUILD_NUMBER} \n" +
-                                "status: ${currentBuild.currentResult} \n" +
-                                "Job URL: ${env.BUILD_URL}"
-                    //Send email notification using method
-                    sendEmailNotification('jaya.sujan.kumar@gmail.com', subject, body)                   
-                }
+        // post {
+        //     // Only run if the pipeline or stage has success status
+        //     success {
+        //         script {
+        //             // Send email notification with custom message
+        //             def subject = "Pipeline ${currentBuild.currentResult}: Job: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}"
+        //             def body = "Build Number: ${env.BUILD_NUMBER} \n" +
+        //                         "status: ${currentBuild.currentResult} \n" +
+        //                         "Job URL: ${env.BUILD_URL}"
+        //             //Send email notification using method
+        //             sendEmailNotification('jaya.sujan.kumar@gmail.com', subject, body)                   
+        //         }
             
-            }
-            // Only run if the pipeline or stage has failure status
-            failure {
-                script {
-                    // Send email notification with custom message
-                    def subject = "Pipeline ${currentBuild.currentResult}: Job: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}"
-                    def body = "Build Number: ${env.BUILD_NUMBER} \n" +
-                                "status: ${currentBuild.currentResult} \n" +
-                                "Job URL: ${env.BUILD_URL}"
-                    //Send email notification using method
-                    sendEmailNotification('jaya.sujan.kumar@gmail.com', subject, body)                   
-                }
-            }
-        }        
+        //     }
+        //     // Only run if the pipeline or stage has failure status
+        //     failure {
+        //         script {
+        //             // Send email notification with custom message
+        //             def subject = "Pipeline ${currentBuild.currentResult}: Job: ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}"
+        //             def body = "Build Number: ${env.BUILD_NUMBER} \n" +
+        //                         "status: ${currentBuild.currentResult} \n" +
+        //                         "Job URL: ${env.BUILD_URL}"
+        //             //Send email notification using method
+        //             sendEmailNotification('jaya.sujan.kumar@gmail.com', subject, body)                   
+        //         }
+        //     }
+        // }        
 
     }
     
