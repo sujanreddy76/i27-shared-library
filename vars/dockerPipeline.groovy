@@ -302,7 +302,7 @@ def dockerBuildAndPush(){
 def dockerDeploy(envDeploy, hostPort, contPort){
     return {
         echo "****************** Deploy to $envDeploy Env ******************"
-        withCredentials([usernamePassword(credentialsId: 'john_docker_vm_passwd', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+        withCredentials([usernamePassword(credentialsId: 'john_docker_vm_password', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
             // some block
             //We will communicate to the docker-server vm
             script {
