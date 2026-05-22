@@ -1,5 +1,5 @@
 import com.i27academy.builds.Docker;
-import com.i27academy.builds.k8s.K8s;
+import com.i27academy.k8s.K8s;
 
 def call(Map pipelineParams) {
 
@@ -50,11 +50,7 @@ def call(Map pipelineParams) {
         }
         environment {
             APPLICATION_NAME = "${pipelineParams.appName}"
-            //Below are the HostPorts
-            DEV_HOST_PORT = "${pipelineParams.devHostPort}"
-            TST_HOST_PORT = "${pipelineParams.tstHostPort}"
-            STG_HOST_PORT = "${pipelineParams.stgHostPort}"
-            PROD_HOST_PORT = "${pipelineParams.prodHostPort}"
+
             //Below is the ContainerPort
             CONT_PORT = "${pipelineParams.contPort}"
             POM_VERSION = readMavenPom().getVersion()
