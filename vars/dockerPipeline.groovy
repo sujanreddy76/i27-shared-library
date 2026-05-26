@@ -107,7 +107,7 @@ def call(Map pipelineParams) {
                         sh """
                             mvn sonar:sonar \
                                 -Dsonar.projectKey=i27-eureka \
-                                -Dsonar.host.url=http://34.55.4.214:9000 \
+                                -Dsonar.host.url=http://35.194.15.158:9000 \
                                 -Dsonar.login=sqa_e077ec93f2d4816fb8ec6703a8b8b07857b01d84
                         """    
                     }

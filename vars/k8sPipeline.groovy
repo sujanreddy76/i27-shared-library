@@ -64,15 +64,6 @@ def call(Map pipelineParams) {
             DEV_PROJECT_ID = "project-d124de7c-f08a-4d92-977"
         }
         stages {
-            stage('Authentication') {
-                steps{
-                    echo "Executing in gcp gke project"
-                    script {    
-                        k8s.auth_login("${env.DEV_CLUSTER_NAME}", "${env.DEV_CLUSTER_ZONE}", "${env.DEV_PROJECT_ID}")
-                        //(clusterName, zone, projectID)
-                    }
-                }
-            }
             stage('Build') {
                 when {
                     anyOf {
@@ -115,7 +106,7 @@ def call(Map pipelineParams) {
                         sh """
                             mvn sonar:sonar \
                                 -Dsonar.projectKey=i27-eureka \
-                                -Dsonar.host.url=http://34.55.4.214:9000 \
+                                -Dsonar.host.url=http://35.194.15.158:9000 \
                                 -Dsonar.login=sqa_e077ec93f2d4816fb8ec6703a8b8b07857b01d84
                         """    
                     }
@@ -146,6 +137,7 @@ def call(Map pipelineParams) {
                 }            
                 steps {
                     script {
+                        k8s.auth_login("${env.DEV_CLUSTER_NAME}", "${env.DEV_CLUSTER_ZONE}", "${env.DEV_PROJECT_ID}")
                         imageValidation().call()
                        // dockerDeploy('dev', "${env.DEV_HOST_PORT}", "${env.CONT_PORT}").call()
                     }  
