@@ -62,6 +62,19 @@ def call(Map pipelineParams) {
             DEV_CLUSTER_NAME = "i27-cluster"
             DEV_CLUSTER_ZONE = "us-central1-a"
             DEV_PROJECT_ID = "project-d124de7c-f08a-4d92-977"
+
+            //k8s file names env variables
+            K8S_DEV_FILE = "k8s_dev.yaml"
+            K8S_TST_FILE = "k8s_tst.yaml"
+            K8S_STG_FILE = "k8s_stg.yaml"
+            K8S_PRD_FILE = "k8s_prd.yaml"
+            
+            //Namespace definition
+            DEV_NAMESPACE = "cart-dev-ns"
+            TST_NAMESPACE = "cart-tst-ns"
+            STG_NAMESPACE = "cart-stg-ns"
+            PRD_NAMESPACE = "cart-prd-ns"
+
         }
         stages {
             stage('Build') {
@@ -137,9 +150,19 @@ def call(Map pipelineParams) {
                 }            
                 steps {
                     script {
+
+                        //This will get the docker image name and store it in docker_image variable
+                        def docker_image = "${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${GIT_COMMIT}"
+
+                        //This will login to the kubernetes cluster
                         k8s.auth_login("${env.DEV_CLUSTER_NAME}", "${env.DEV_CLUSTER_ZONE}", "${env.DEV_PROJECT_ID}")
+
+                        //This will validate the image is available in DockerHub if it is not available it will build and push the image into DockerHub
                         imageValidation().call()
-                       // dockerDeploy('dev', "${env.DEV_HOST_PORT}", "${env.CONT_PORT}").call()
+
+                        //deploying to kubernetes cluster in cart-dev-ns namespace
+                        //(fileName, docker_image, namespace)
+                        k8s.k8sDeploy("${env.K8S_DEV_FILE}", docker_image, "${env.DEV_NAMESPACE}")
                     }  
                 }
                 // a mail should trigger based on the status
@@ -255,7 +278,7 @@ def imageValidation() {
             println("************ Image is Pulled Successfully ************")
         }
         catch(Exception e) {
-            println("******* OOPS, The docker image with this tag is not available in the repo, So Building the Application and creating the Image**********")
+            println("******* OOPS, The docker image with this tag is not available in the repo, So Building the Application, creating the Image and pushing into DockerHub **********")
             buildApp().call()
             dockerBuildAndPush().call()
         }

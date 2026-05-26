@@ -15,4 +15,11 @@ class K8s{
         jenkins.sh "kubectl get nodes"
     }
 
+    //Method to deploy to the application
+    def k8sDeploy(fileName, docker_image, namespace){
+        jenkins.echo "****** Entering into kubernetes Deployment Method *******"
+        jenkins.sh "sed -i 's|DIT|${docker_image}|g' ./.cicd/${fileName}"
+        jenkins.sh "kubectl apply -f ./.cicd/${fileName} -n ${namespace}" 
+    }
+
 }
