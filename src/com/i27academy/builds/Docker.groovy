@@ -11,7 +11,7 @@ class Docker {
     def buildApp(appName) {
         jenkins.sh """
             echo "Building the $appName application"
-            sh 'mvn clean package -DskipTests=true'
+            mvn clean package -DskipTests=true
             archive 'target/*.jar'
         """
     }
