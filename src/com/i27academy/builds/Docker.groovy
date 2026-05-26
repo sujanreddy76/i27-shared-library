@@ -9,11 +9,11 @@ class Docker {
 
     //Application Build
     def buildApp(appName) {
-        jenkins.sh """
-            echo "Building the $appName application"
-            mvn clean package -DskipTests=true
-            archive 'target/*.jar'
-        """
+            jenkins.echo "Building the ${appName} application"
+
+            jenkins.sh "mvn clean package -DskipTests=true"
+
+            jenkins.archiveArtifacts artifacts: 'target/*.jar'
     }
 
 
