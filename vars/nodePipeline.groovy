@@ -210,8 +210,7 @@ def imageValidation() {
             println("************ Image is Pulled Successfully ************")
         }
         catch(Exception e) {
-            println("******* OOPS, The docker image with this tag is not available in the repo, So Building the Application, creating the Image and pushing into DockerHub **********")
-            buildApp().call()
+            println("******* OOPS, The docker image with this tag is not available in the repo, So Building or creating the Image and pushing into DockerHub **********")
             dockerBuildAndPush().call()
         }
     }
