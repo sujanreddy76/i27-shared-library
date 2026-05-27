@@ -221,7 +221,9 @@ def imageValidation() {
 def dockerBuildAndPush(){
     return {
         echo "**************** Building Docker Image *******************"
-        sh "docker build --no-cache -t ${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${GIT_COMMIT} ./.cicd/Dockerfile"
+        // docker build -t <Imagename:tag>-f <Dockerfile-path> <build-context>
+        // ./.cicd/Dockerfile is the Dockerfile location and . is the build context(project root) because COPY . $SRC_DIR needs access to entire project files.
+        sh "docker build --no-cache -t ${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${GIT_COMMIT} -f ./.cicd/Dockerfile ."
         echo "**************** Login to docker registry *******************"
         sh "docker login -u ${DOCKER_CREDS_USR} -p ${DOCKER_CREDS_PSW}"
         echo "**************** Push Image to docker registry *******************"
