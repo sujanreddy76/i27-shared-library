@@ -39,7 +39,7 @@ class K8s{
         jenkins.echo "********** Listing the files in the workspace ***********"
         jenkins.sh "ls -la"
         jenkins.echo "******** Listing the files in the shared library **********"
-        jenkins.sh "ls -la i27-shared-library"
+        // jenkins.sh "ls -la i27-shared-library"
     }
 
 }
