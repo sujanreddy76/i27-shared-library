@@ -22,10 +22,22 @@ class K8s{
  }
 
     //Method for helm deployments
-    def k8sHelmChartDeploy() {
+    def k8sHelmChartDeploy(appName, env) {
         jenkins.echo "****** Entering into kubernetes Helm Deployment Method *******"
         jenkins.sh "helm version"
+        jenkins.echo "********** Installing the Chart ****************"
+           // helm install <release-name> <chart-path> -f <values-file> --set image.tag=<tag> -n <namespace>
+           // helm install eureka-dev-chart
+        jenkins.sh "helm install ${appName}-${env}-chart <chart-path> -f <values-file> --set image.tag=<tag> -n <namespace>"
 
+    }
+    
+    //Clone the Shared Library
+    def gitClone(){
+        jenkins.echo "********** Cloning the shared Library **********"
+        jenkins.sh "git clone -b main https://github.com/sujanreddy76/i27-shared-library.git"
+        jenkins.echo "********** Listing the files in the workspace ***********"
+        jenkins.sh "ls -la"
     }
 
 }
