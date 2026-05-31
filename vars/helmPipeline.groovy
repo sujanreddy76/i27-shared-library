@@ -80,7 +80,6 @@ def call(Map pipelineParams) {
             stage('CheckoutSharedLibrary') {
                 steps{
                     script{
-                        cleanWs()
                         k8s.gitClone()
                     }
                 }
