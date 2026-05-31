@@ -82,7 +82,7 @@ def call(Map pipelineParams) {
             PRD_ENV = "prd"
 
             //chart path details
-            HELM_CHART_PATH = "${WORKSPACE}/i27-shared-lib/chart"
+            HELM_CHART_PATH = "${WORKSPACE}/i27-shared-library/chart"
 
         }
         stages {
