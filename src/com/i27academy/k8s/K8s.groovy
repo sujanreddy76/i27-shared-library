@@ -19,7 +19,13 @@ class K8s{
     def k8sDeploy(fileName, docker_image, namespace){
         jenkins.echo "****** Entering into kubernetes Deployment Method *******"
         jenkins.sh "sed -i 's|DIT|${docker_image}|g' ./.cicd/${fileName}"
-        jenkins.sh "kubectl apply -f ./.cicd/${fileName} -n ${namespace}" 
+ }
+
+    //Method for helm deployments
+    def k8sHelmChartDeploy() {
+        jenkins.echo "****** Entering into kubernetes Helm Deployment Method *******"
+        jenkins.sh "helm version"
+
     }
 
 }

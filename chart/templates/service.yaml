@@ -1,0 +1,14 @@
+---
+# Service yaml for eureka micro-service in dev-ns(namespace)
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.fullname }}# Eg: i27-eureka-dev
+  labels:
+    app: {{ .Values.fullname }}# Eg: i27-eureka-dev
+spec:
+  selector:
+    app: {{ .Values.fullname }}# Eg: i27-eureka-dev
+  ports:
+  - port: 80
+    targetPort: {{ .Values.targetPort }}
