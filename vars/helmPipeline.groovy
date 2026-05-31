@@ -80,6 +80,7 @@ def call(Map pipelineParams) {
             stage('CheckoutSharedLibrary') {
                 steps{
                     script{
+                        cleanWs()
                         k8s.gitClone()
                     }
                 }
@@ -235,7 +236,13 @@ def call(Map pipelineParams) {
 
                     }
                 }
-            }         
+            } 
+            stage('Clean Workspace') {
+                steps{
+                    echo "***** Cleaning the Workspace *******"
+                    cleanWs()
+                }
+            }        
 
         }
         // post {

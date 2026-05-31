@@ -38,6 +38,8 @@ class K8s{
         jenkins.sh "git clone -b main https://github.com/sujanreddy76/i27-shared-library.git"
         jenkins.echo "********** Listing the files in the workspace ***********"
         jenkins.sh "ls -la"
+        jenkins.echo "******** Listing the files in the shared library **********"
+        jenkins.sh "ls -la i27-shared-library"
     }
 
 }
