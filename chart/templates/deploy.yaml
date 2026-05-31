@@ -1,25 +1,22 @@
-# Deployment yaml file common for all microservices accross all envs
-# the values will be shared from application team depending on microservice and environment
+# Deployment yaml file common for all microservices across all environments
+# Values will be provided by the application team based on microservice and environment
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.fullname }} # Eg: i27-eureka-dev
+  name: {{ .Values.fullname }}
   labels:
-    app: {{ .Values.fullname }} # Eg: i27-eureka-dev
+    app: {{ .Values.fullname }}
 spec:
   replicas: {{ .Values.replicas.default }}
   selector:
     matchLabels:
-      app: {{ .Values.fullname }} # Eg: i27-eureka-dev
+      app: {{ .Values.fullname }}
   template:
     metadata:
       labels:
-        app: {{ .Values.fullname }} # Eg: i27-eureka-dev
+        app: {{ .Values.fullname }}
     spec:
       containers:
-      - name: {{ .Values.fullname }} # Eg: i27-eureka-dev
+      - name: {{ .Values.fullname }}
         image: {{ .Values.image.name }}:{{ .Values.image.tag }}
-
-      
-
-                  
