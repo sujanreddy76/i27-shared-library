@@ -22,13 +22,13 @@ class K8s{
  }
 
     //Method for helm deployments
-    def k8sHelmChartDeploy(appName, env) {
+    def k8sHelmChartDeploy(appName, env, helmChartPath, imageTag, namespace) {
         jenkins.echo "****** Entering into kubernetes Helm Deployment Method *******"
         jenkins.sh "helm version"
         jenkins.echo "********** Installing the Chart ****************"
            // helm install <release-name> <chart-path> -f <values-file> --set image.tag=<tag> -n <namespace>
-           // helm install eureka-dev-chart
-        jenkins.sh "helm install ${appName}-${env}-chart <chart-path> -f <values-file> --set image.tag=<tag> -n <namespace>"
+           // helm install eureka-dev-chart ${WORKSPACE}/i27-shared-library/chart -f .cicd/helm_values/values_${env}.yaml --set image.tag=${imageTag} -n cart-dev-ns
+        jenkins.sh "helm install ${appName}-${env}-chart ${helmChartPath} -f .cicd/helm_values/values_${env}.yaml --set image.tag=${imageTag} -n ${namespace}"
 
     }
     

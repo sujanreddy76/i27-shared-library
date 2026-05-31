@@ -75,6 +75,15 @@ def call(Map pipelineParams) {
             STG_NAMESPACE = "cart-stg-ns"
             PRD_NAMESPACE = "cart-prd-ns"
 
+            //Environment Details
+            DEV_ENV = "dev"
+            TST_ENV = "tst"
+            STG_ENV = "stg"
+            PRD_ENV = "prd"
+
+            //chart path details
+            HELM_CHART_PATH = "${WORKSPACE}/i27-shared-lib/chart"
+
         }
         stages {
             stage('CheckoutSharedLibrary') {
@@ -168,7 +177,8 @@ def call(Map pipelineParams) {
                         imageValidation().call()
 
                         //Deploy using helm charts to kubernetes cluster in cart-dev-ns namespace
-                        k8s.k8sHelmChartDeploy()
+                        // (appName, env, helmChartPath, imageTag, namespace)
+                        k8s.k8sHelmChartDeploy("${env.APPLICATION_NAME}", "${env.DEV_ENV}", "${env.HELM_CHART_PATH}", "${GIT_COMMIT}", "${env.DEV_NAMESPACE}" )
                     }  
                 }
                 // a mail should trigger based on the status
