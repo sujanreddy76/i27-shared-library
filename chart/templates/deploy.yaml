@@ -3,21 +3,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.fullname }}# Eg: i27-eureka-dev
+  name: {{ .Values.fullname }} # Eg: i27-eureka-dev
   labels:
-    app: {{ .Values.fullname }}# Eg: i27-eureka-dev
+    app: {{ .Values.fullname }} # Eg: i27-eureka-dev
 spec:
   replicas: {{ .Values.replicas.default }}
   selector:
     matchLabels:
-      app: {{ .Values.fullname }}# Eg: i27-eureka-dev
+      app: {{ .Values.fullname }} # Eg: i27-eureka-dev
   template:
     metadata:
       labels:
-        app: {{ .Values.fullname }}# Eg: i27-eureka-dev
+        app: {{ .Values.fullname }} # Eg: i27-eureka-dev
     spec:
       containers:
-      - name: {{ .Values.fullname }}# Eg: i27-eureka-dev
+      - name: {{ .Values.fullname }} # Eg: i27-eureka-dev
         image: {{ .Values.image.name }}:{{ .Values.image.tag }}
 
       
