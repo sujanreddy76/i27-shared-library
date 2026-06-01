@@ -30,8 +30,8 @@ class K8s{
 
         jenkins.echo "********Lets Verify Helm Chart exists with that name******"
 
-        def chartExists = jenkins.sh(
-            script: "helm list -n ${namespace} | grep -q '^${appName}-${env}-chart\$'",
+        def chartExists = sh(
+            script: "helm list -n ${namespace} -q | grep -x '${appName}-${env}-chart'",
             returnStatus: true
         )
 
