@@ -21,15 +21,41 @@ class K8s{
         jenkins.sh "sed -i 's|DIT|${docker_image}|g' ./.cicd/${fileName}"
  }
 
-    //Method for helm deployments
+
+    // Method for Helm deployments
     def k8sHelmChartDeploy(appName, env, helmChartPath, imageTag, namespace) {
+
         jenkins.echo "****** Entering into kubernetes Helm Deployment Method *******"
         jenkins.sh "helm version"
-        jenkins.echo "********** Installing the Chart ****************"
-           // helm install <release-name> <chart-path> -f <values-file> --set image.tag=<tag> -n <namespace>
-           // helm install eureka-dev-chart ${WORKSPACE}/i27-shared-library/chart -f .cicd/helm_values/values_${env}.yaml --set image.tag=${imageTag} -n cart-dev-ns
-        jenkins.sh "helm install ${appName}-${env}-chart ${helmChartPath} -f .cicd/helm_values/values_${env}.yaml --set image.tag=${imageTag} -n ${namespace}"
 
+        jenkins.echo "********Lets Verify Helm Chart exists with that name******"
+
+        def chartExists = jenkins.sh(
+            script: "helm list -n ${namespace} | grep -q '^${appName}-${env}-chart\$'",
+            returnStatus: true
+        )
+
+        if (chartExists == 0) {
+            jenkins.echo "This Chart Exists"
+            jenkins.echo "Upgrading the Chart"
+
+            jenkins.sh """
+                helm upgrade ${appName}-${env}-chart ${helmChartPath} \
+                -f .cicd/helm_values/values_${env}.yaml \
+                --set image.tag=${imageTag} \
+                -n ${namespace}
+            """
+        } else {
+            jenkins.echo "This Chart Does Not Exist"
+            jenkins.echo "Installing the Chart"
+
+            jenkins.sh """
+                helm install ${appName}-${env}-chart ${helmChartPath} \
+                -f .cicd/helm_values/values_${env}.yaml \
+                --set image.tag=${imageTag} \
+                -n ${namespace}
+            """
+        }
     }
     
     //Clone the Shared Library
