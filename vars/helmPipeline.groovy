@@ -254,6 +254,23 @@ def call(Map pipelineParams) {
             }        
 
         }
+        post {
+            always {
+                 echo "***** Cleaning the Workspace *******"
+                 script {
+                    def i27SharedLibrary = "${WORKSPACE}/i27-shared-library"
+                    if(fileExists(i27SharedLibrary)) {
+                        echo "Deleting the shared library directory: ${i27SharedLibrary}"
+                        sh "rm -rf ${i27SharedLibrary}"
+                    }
+                    else {
+                        echo "i27-shared-library directory does not exists: ${i27SharedLibrary}, seems already cleanedup"
+                    }
+
+                 }
+
+            }
+        }
         // post {
         //     // Only run if the pipeline or stage has success status
         //     success {
