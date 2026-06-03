@@ -19,6 +19,7 @@ class K8s{
     def k8sDeploy(fileName, docker_image, namespace){
         jenkins.echo "****** Entering into kubernetes Deployment Method *******"
         jenkins.sh "sed -i 's|DIT|${docker_image}|g' ./.cicd/${fileName}"
+        jenkins.sh "kubectl apply -f ./.cicd/${fileName} -n ${namespace}"
  }
 
 
@@ -34,7 +35,7 @@ class K8s{
             script: "helm list -n ${namespace} -q | grep -x '${appName}-${env}-chart'",
             returnStatus: true
         )
-
+        // 0 = Success (true), non-zero = Failure (false)
         if (chartExists == 0) {
             jenkins.echo "This Chart Exists"
             jenkins.echo "Upgrading the Chart"
